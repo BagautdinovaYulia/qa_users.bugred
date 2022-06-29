@@ -1,7 +1,4 @@
 import time
-
-from faker.providers import person
-
 from generator.generator import generated_person
 from locators.form_locators import FormLocators
 from pages.base_page import BasePage
