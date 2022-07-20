@@ -1,15 +1,13 @@
 import time
-from test_login import TestElements
+import requests
+
 from pages.form_page import FormPage
+
 
 class TestForm:
 
-    def test_open_test_form(self, driver):
-        TestElements.TestLogin.test_login(self, driver)
-
     def test_form(self, driver):
-        form_page = FormPage(driver, "http://users.bugred.ru/user/admin/index/create.html")
+        form_page = FormPage(driver, requests.post("http://users.bugred.ru/user/login", params={"login": "7dazzlestar3bagautd@gmail.com", "password": "12345qa"}))
+
         form_page.fill_form_fields()
         time.sleep(3)
-
-
