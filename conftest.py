@@ -1,4 +1,5 @@
 import pytest
+
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.firefox import GeckoDriverManager
@@ -15,3 +16,5 @@ def driver(request):
     yield driver
 
     driver.quit()
+
+

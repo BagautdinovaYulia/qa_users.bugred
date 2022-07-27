@@ -8,13 +8,13 @@ Faker.seed()
 
 
 def generated_person():
-    yield Person(
+    yield Person(  # return заменить
         name=faker_ru.first_name(),
         email=faker_ru.email()
     )
 
 def generated_password():
-    yield Password(
+    yield Password(  # return заменить
         password=''.join((random.choice('12345abcdxyzpqr') for i in range(5)))
     )
 

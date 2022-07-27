@@ -9,17 +9,17 @@ class RegistrationPage(BasePage):
     locators = RegistrationLocators()
 
     def fill_registration_fields(self):
-        # person_info = next(generated_person())
-        # name = person_info.name
-        # email = person_info.email
+        person_info = next(generated_person())
+        name = person_info.name
+        email = person_info.email
 
-        # password_info = next(generated_password())
-        # password = password_info.password
+        password_info = next(generated_password())
+        password = password_info.password
 
-        self.element_is_visible(self.locators.INPUT_NAME).send_keys("TestName")
-        self.element_is_visible(self.locators.INPUT_EMAIL_SINGUP).send_keys("7dazzlestar3bagautd@gmail.com")
+        self.element_is_visible(self.locators.INPUT_NAME).send_keys(name)
+        self.element_is_visible(self.locators.INPUT_EMAIL_SINGUP).send_keys(email)
         password_field = self.elements_are_present(self.locators.INPUT_PASSWORD_SINGUP)[1]
-        password_field.send_keys("12345qa")
+        password_field.send_keys(password)
         self.element_is_visible(self.locators.BUTTON_SINGUP).click()
         time.sleep(3)
         # return person_info.email
