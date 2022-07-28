@@ -1,0 +1,6 @@
+.pkl
+.log
+.venv
+/allure
+venv/
+.idea

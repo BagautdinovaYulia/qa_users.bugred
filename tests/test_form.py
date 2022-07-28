@@ -1,7 +1,6 @@
+import pickle
 import time
-
 import allure
-import requests
 
 from pages.form_page import FormPage
 
@@ -11,6 +10,17 @@ class TestForm:
 
     @allure.title("Проверка создания пользователя")
     def test_form(self, driver):
-        form_page = FormPage(driver, "http://users.bugred.ru/user/login")
-        form_page.fill_form_fields()
-        time.sleep(3)
+        driver.get("http://users.bugred.ru/login/")
+        cookies = pickle.load(open("cookies.pkl", "rb"))
+        for cookie in cookies:
+            driver.add_cookie(cookie)
+
+        form_page = FormPage(driver, "http://users.bugred.ru/admin/index/create")
+        users_page = FormPage(driver, "http://users.bugred.ru/admin/")
+        with allure.step("Открытие страницы создания пользователя"):
+            form_page.open()
+        with allure.step("Заполнение и отправка формы"):
+            form_page.fill_form_fields()
+            time.sleep(1)
+        with allure.step("Проверка, что пользователь создан"):
+            users_page.check_added_user()

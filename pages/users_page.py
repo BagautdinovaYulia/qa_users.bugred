@@ -7,10 +7,11 @@ class UsersPage(BasePage):
 
     locators = UsersLocators()
 
-    # def check_new_user(self):
-
     def delete_user(self):
         self.element_is_present(self.locators.BUTTON_DELETE_USER).click()
 
-    # кнопка "Успешно удалено!" пропадает за 1 сек
-    # def check_deleted_user(self):
+    def check_added_user(self):
+        assert self.element_is_visible(self.locators.BUTTON_DELETE_USER) is not None
+
+    def check_deleted_user(self):
+        assert self.element_is_visible(self.locators.BUTTON_DELETE_USER) is None

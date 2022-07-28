@@ -2,11 +2,13 @@ import time
 
 from generator.generator import generated_person, generated_password
 from locators.login_locators import LoginLocators, RegistrationLocators
+from locators.users_locators import UsersLocators
 from pages.base_page import BasePage
 
 
 class RegistrationPage(BasePage):
     locators = RegistrationLocators()
+    locator_check = UsersLocators()
 
     def fill_registration_fields(self):
         person_info = next(generated_person())
@@ -20,18 +22,22 @@ class RegistrationPage(BasePage):
         self.element_is_visible(self.locators.INPUT_EMAIL_SINGUP).send_keys(email)
         password_field = self.elements_are_present(self.locators.INPUT_PASSWORD_SINGUP)[1]
         password_field.send_keys(password)
-        self.element_is_visible(self.locators.BUTTON_SINGUP).click()
-        time.sleep(3)
-        # return person_info.email
+        self.element_is_visible(self.locators.BUTTON_SINGUP, timeout=5).click()
+
+        return email, password
+
+    def check_registration(self):
+        assert self.element_is_visible(self.locator_check.BUTTON_PRIVATE_AREA) is not None
 
 
-class LoginPage(BasePage):
+class LoginPage(BasePage, RegistrationPage):
     locators = LoginLocators()
 
-    def fill_login_fields(self):
-        self.element_is_visible(self.locators.BUTTON_LOGIN).click()
-        time.sleep(3)
-        self.element_is_visible(self.locators.INPUT_EMAIL_SINGIN).send_keys("7dazzlestar3bagautd@gmail.com")
-        self.elements_are_present(self.locators.INPUT_PASSWORD_SINGIN).send_keys("12345qa")
-        self.element_is_visible(self.locators.BUTTON_SINGIN).click()
-        time.sleep(3)
+    def fill_login_fields(self, email, password):
+        # email = RegistrationPage.fill_registration_fields.email
+        # password = RegistrationPage.fill_registration_fields.password
+
+        self.element_is_visible(self.locators.INPUT_EMAIL_SINGIN).send_keys(email)
+        self.elements_are_present(self.locators.INPUT_PASSWORD_SINGIN).send_keys(password)
+        self.element_is_visible(self.locators.BUTTON_SINGIN, timeout=5).click()
+
